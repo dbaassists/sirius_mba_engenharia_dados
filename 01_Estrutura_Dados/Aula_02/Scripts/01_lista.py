@@ -1,3 +1,14 @@
+#########################################################################
+# Aula 02 - Estrutura de Dados
+# Autor: Gabriel Quintella
+# Data: 10/09/2024
+# Assunto: 1. LISTA (List)
+# Uma lista é uma estrutura de dados mutável que permite adicionar, remover e modificar seus elementos. 
+# Onde uma lista permite armazenar objetos seja de um mesmo tipo ou não.
+#########################################################################
+
+
+
 # %% 
 
 # 01 - Criando listas vazias (Modo 01)
