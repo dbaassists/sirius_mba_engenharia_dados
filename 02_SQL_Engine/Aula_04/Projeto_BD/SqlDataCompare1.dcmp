@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DataComparison>
+  <Version>10</Version>
+  <ConnectionProperties1>
+    <ConnectionString>Data Source=localhost\DBAASSISTS;Initial Catalog=ERP_VENDAS;Persist Security Info=True;User ID=adminmba;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</ConnectionString>
+    <FullDisplayName>localhost\DBAASSISTS.ERP_VENDAS (adminmba)</FullDisplayName>
+  </ConnectionProperties1>
+  <ConnectionProperties2>
+    <ConnectionString>Data Source=srv-mba-engenharia-dados.database.windows.net;Initial Catalog=db-mba-engenharia-dados;Persist Security Info=True;User ID=adminmba;Pooling=False;MultipleActiveResultSets=False;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True</ConnectionString>
+    <FullDisplayName>srv-mba-engenharia-dados.database.windows.net.db-mba-engenharia-dados (adminmba)</FullDisplayName>
+  </ConnectionProperties2>
+  <SessionSettings>Default</SessionSettings>
+</DataComparison>
