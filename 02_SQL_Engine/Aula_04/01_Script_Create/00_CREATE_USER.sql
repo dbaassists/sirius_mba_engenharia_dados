@@ -31,7 +31,16 @@ CREATE USER [marielle.miziara] FOR LOGIN [marielle.miziara]
 GO
 
 
+CREATE LOGIN [daniela.braganca] 
+WITH PASSWORD=N'DanBra(äsd86Q!2024>'
+GO
+CREATE USER [daniela.braganca] FOR LOGIN [daniela.braganca]
+GO
 
+GRANT ROLE db_ddladmin ADD MEMBER TO [rodrigo.charles]
+
+GRANT CONTROL ON DATABASE::[db-mba-engenharia-dados] TO [rodrigo.charles];
+GO
 
 server: srv-mba-engenharia-dados.database.windows.net
 database: db-mba-engenharia-dados
@@ -58,3 +67,17 @@ database: db-mba-engenharia-dados
 username: marielle.miziara
 password: MarMiz(äsd86Q!2024>
 
+
+
+GRANT CONTROL ON DATABASE::[db-mba-engenharia-dados] TO [rodrigo.charles];
+GO
+GRANT CONTROL ON DATABASE::[db-mba-engenharia-dados] TO [marielle.miziara];
+GO
+GRANT CONTROL ON DATABASE::[db-mba-engenharia-dados] TO [wesley.mical];
+GO
+GRANT CONTROL ON DATABASE::[db-mba-engenharia-dados] TO [flavia.castro];
+GO
+GRANT CONTROL ON DATABASE::[db-mba-engenharia-dados] TO [nathan.arrais];
+GO
+GRANT CONTROL ON DATABASE::[db-mba-engenharia-dados] TO [daniela.braganca];
+GO
