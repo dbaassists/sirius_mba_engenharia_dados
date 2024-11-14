@@ -1,0 +1,61 @@
+
+Tb_CategoriaGeral  
+WHERE TIPO = 'Eletronicos'
+
+
+TB_CategoriaProdutosEletronicos
+
+--------------------------------------------------------------
+
+INSERT INTO TB_CategoriaProdutosEletronicos
+SELECT * FROM Tb_CategoriaGeral  
+WHERE TIPO = 'Eletronicos'
+AND CodCategoria not in (TB_CategoriaProdutosEletronicos)
+
+UPDATE TB_CategoriaProdutosEletronicos a
+join Tb_CategoriaGeral   b
+ON a.CodCategoria = b.CodCategoria
+WHERE TIPO = 'Eletronicos'
+
+DELETE TB_CategoriaProdutosEletronicos
+WHERE CodCategoria not in (Tb_CategoriaGeral)
+
+--------------------------------------------------------------
+
+MERGE INTO TB_CategoriaProdutosEletronicos AS APELIDO_DESTINO -- 100000000 REG / 9935346 REG IGUAIS / 0 REG DIF
+
+USING (SELECT * FROM Tb_CategoriaGeral  -- 100000000 REG / 9935346 REG IGUAIS / 0 REG DIF
+		WHERE TIPO = 'Eletronicos') AS APELIDO_ORIGEM
+
+ON APELIDO_DESTINO.CodCategoria = APELIDO_ORIGEM.CodCategoria
+
+AND (
+
+APELIDO_DESTINO.CAMPO1 != APELIDO_ORIGEM.CAMPO1
+OR APELIDO_DESTINO.CAMPO2 != APELIDO_ORIGEM.CAMPO2
+OR APELIDO_DESTINO.CAMPO3 != APELIDO_ORIGEM.CAMPO3
+OR APELIDO_DESTINO.CAMPO4 != APELIDO_ORIGEM.CAMPO4
+
+)
+
+-- INSERT
+
+WHEN NOT MATCHED THEN
+
+INSERT (APELIDO_DESTINO.CAMPOS) VALUES (APELIDO_ORIGEM.CAMPOS)
+
+-- UPDATE
+
+WHEN MATCHED THEN 
+
+UPDATE SET 
+
+APELIDO_DESTINO.CAMPO1 = APELIDO_ORIGEM.CAMPO1
+,APELIDO_DESTINO.CAMPO2 = APELIDO_ORIGEM.CAMPO2
+,APELIDO_DESTINO.CAMPO3 = APELIDO_ORIGEM.CAMPO3
+,APELIDO_DESTINO.CAMPO4 = APELIDO_ORIGEM.CAMPO4
+
+-- DELETE
+
+WHEN NOT MATCHED BY SOURCE THEN 
+DELETE;
