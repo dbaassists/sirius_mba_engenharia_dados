@@ -1,0 +1,99 @@
+-- 2 – UF - Carga Manual
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('AC', 'Acre');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('AL', 'Alagoas');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('AM', 'Amazonas');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('AP', 'Amapá');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('BA', 'Bahia');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('CE', 'Ceará');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('DF', 'Distrito Federal');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('ES', 'Espírito Santo');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('GO', 'Goiás');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('MA', 'Maranhão');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('MG', 'Minas Gerais');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('MS', 'Mato Grosso do Sul');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('MT', 'Mato Grosso');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('PA', 'Pará');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('PB', 'Paraíba');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('PE', 'Pernambuco');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('PI', 'Piauí');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('PR', 'Paraná');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('RJ', 'Rio de Janeiro');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('RN', 'Rio Grande do Norte');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('RO', 'Rondônia');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('RR', 'Roraima');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('RS', 'Rio Grande do Sul');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('SC', 'Santa Catarina');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('SE', 'Sergipe');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('SP', 'São Paulo');
+INSERT INTO [dbo].[Unidade_Federacao] ([SG_UF], [DS_UF]) VALUES ('TO', 'Tocantins');
+
+-- 3 – Cargo
+INSERT INTO Cargo (CD_CARGO, DS_CARGO)
+SELECT DISTINCT CD_CARGO, DS_CARGO
+FROM carga_consulta_cand
+
+-- 4 – Situação Candidatura
+SELECT DISTINCT CASE WHEN CD_SITUACAO_CANDIDATURA = -3 THEN 0 ELSE CD_SITUACAO_CANDIDATURA END, DS_SITUACAO_CANDIDATURA
+FROM carga_consulta_cand
+
+-- 5 – Partido
+INSERT INTO Partido (NR_PARTIDO, SG_PARTIDO, NM_PARTIDO)
+SELECT DISTINCT NR_PARTIDO, SG_PARTIDO, NM_PARTIDO
+FROM carga_consulta_cand
+
+-- 6 – Grau de Instrução
+INSERT INTO Grau_Instrucao (CD_GRAU_INSTRUCAO, DS_GRAU_INSTRUCAO)
+SELECT DISTINCT CASE WHEN CD_GRAU_INSTRUCAO = -4 THEN 0 ELSE CD_GRAU_INSTRUCAO END, DS_GRAU_INSTRUCAO
+FROM carga_consulta_cand
+
+
+-- 7 – Ocupação
+INSERT INTO Ocupacao (CD_OCUPACAO, DS_OCUPACAO)
+SELECT DISTINCT CD_OCUPACAO, DS_OCUPACAO
+FROM carga_consulta_cand
+
+-- 8 – Eleição
+INSERT INTO Eleicao (CD_ELEICAO, CD_TIPO_ELEICAO, TP_ABRANGENCIA, ANO_ELEICAO, DS_ELEICAO, DT_ELEICAO)
+SELECT DISTINCT CD_ELEICAO, CD_TIPO_ELEICAO, TP_ABRANGENCIA, ANO_ELEICAO, DS_ELEICAO, CONVERT(DATE, DT_ELEICAO, 103)
+FROM carga_consulta_cand
+
+-- Extra - Unidade_Eleitoral
+INSERT INTO Unidade_Eleitoral (SG_UE, NM_UE, SG_UF)
+SELECT DISTINCT SG_UE, NM_UE, SG_UF
+FROM carga_consulta_cand
+
+-- Extra - Situacao Julgamento
+INSERT INTO Situacao_Julgamento (CD_SITUACAO_JULGAMENTO, DS_SITUACAO_JULGAMENTO)
+SELECT DISTINCT CD_SITUACAO_JULGAMENTO, DS_SITUACAO_JULGAMENTO
+FROM carga_votacao_candidato_munzona
+
+-- Extra - Situação Totalização Turno
+INSERT INTO Situacao_Totalizacao_Turno (CD_SIT_TOT_TURNO, DS_SIT_TOT_TURNO)
+SELECT DISTINCT CASE WHEN CD_SIT_TOT_TURNO < 0 THEN 0 ELSE CD_SIT_TOT_TURNO END, DS_SIT_TOT_TURNO
+FROM carga_consulta_cand
+
+-- 1 – Candidato
+INSERT INTO Candidato (SQ_CANDIDATO, NR_CPF_CANDIDATO, CD_ELEICAO, DS_EMAIL, NM_CANDIDATO, NM_SOCIAL_CANDIDATO, SG_UF_NASCIMENTO, DT_NASCIMENTO, NR_TITULO_ELEITORAL_CANDIDATO, CD_GENERO, CD_GRAU_INSTRUCAO, CD_ESTADO_CIVIL, CD_COR_RACA, CD_OCUPACAO, SG_UE, CD_CARGO, NR_CANDIDATO, NM_URNA_CANDIDATO, CD_SITUACAO_CANDIDATURA, NR_PARTIDO, CD_SIT_TOT_TURNO, CD_SITUACAO_JULGAMENTO)
+SELECT TRIM(SQ_CANDIDATO), 
+CASE WHEN NR_CPF_CANDIDATO = '-4' THEN NULL ELSE NR_CPF_CANDIDATO END, 
+CD_ELEICAO, 
+CASE WHEN DS_EMAIL = 'NÃO DIVULGÁVEL' THEN NULL ELSE DS_EMAIL END, 
+NM_CANDIDATO, 
+CASE WHEN NM_SOCIAL_CANDIDATO = '#NULO#' THEN NULL ELSE NM_SOCIAL_CANDIDATO END, 
+CASE WHEN SG_UF_NASCIMENTO IN ('Não divulgável', 'ZZ') THEN NULL ELSE SG_UF_NASCIMENTO END, 
+CONVERT(DATE, DT_NASCIMENTO, 103), 
+CASE WHEN NR_TITULO_ELEITORAL_CANDIDATO = '-4' THEN NULL ELSE NR_TITULO_ELEITORAL_CANDIDATO END, 
+CASE WHEN CD_GENERO<0 THEN 0 ELSE CD_GENERO END, 
+CASE WHEN CD_GRAU_INSTRUCAO<0 THEN 0 ELSE CD_GRAU_INSTRUCAO END, 
+CASE WHEN CD_ESTADO_CIVIL<0 THEN 0 ELSE CD_ESTADO_CIVIL END, 
+CASE WHEN CD_COR_RACA<0 THEN 0 ELSE CD_COR_RACA END, 
+CASE WHEN CD_OCUPACAO<0 THEN 0  ELSE CD_OCUPACAO END, 
+SG_UE, 
+CD_CARGO, 
+NR_CANDIDATO, 
+NM_URNA_CANDIDATO, 
+CASE WHEN CD_SITUACAO_CANDIDATURA = -3 THEN 0 ELSE CD_SITUACAO_CANDIDATURA END, 
+NR_PARTIDO, 
+CASE WHEN CD_SIT_TOT_TURNO<0 THEN 0 ELSE CD_SIT_TOT_TURNO END, 
+(SELECT TOP 1 CD_SITUACAO_JULGAMENTO FROM carga_votacao_candidato_munzona WHERE SQ_CANDIDATO = carga_consulta_cand.SQ_CANDIDATO AND CD_ELEICAO = carga_consulta_cand.CD_ELEICAO)
+FROM carga_consulta_cand
