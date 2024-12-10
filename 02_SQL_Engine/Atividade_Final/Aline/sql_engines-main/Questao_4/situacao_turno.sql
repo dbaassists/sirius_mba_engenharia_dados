@@ -1,0 +1,16 @@
+USE eleicao;
+GO
+CREATE TABLE situacao_turno (
+    CD_SIT_TOT_TURNO INT PRIMARY KEY,
+    DS_SIT_TOT_TURNO VARCHAR(100)
+);
+
+WAITFOR DELAY '00:00:05';
+
+INSERT INTO situacao_turno(CD_SIT_TOT_TURNO,DS_SIT_TOT_TURNO)
+select 
+Distinct
+CD_SIT_TOT_TURNO,
+DS_SIT_TOT_TURNO 
+from
+votacao_candidato_munzona_2024_BRASIL
